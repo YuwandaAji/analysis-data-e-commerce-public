@@ -76,7 +76,7 @@ def create_rfm(df):
     rfm = rfm.dropna(subset=["recency"])
     return rfm
 
-all_df = pd.read_csv("all_ecommerce.csv")
+all_df = pd.read_xlsx("all_ecommerce.xlsx")
 
 datetime_columns = ["order_purchase_timestamp"]
 all_df.sort_values(by="order_purchase_timestamp", inplace=True)
