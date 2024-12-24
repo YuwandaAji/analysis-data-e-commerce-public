@@ -72,9 +72,7 @@ def create_rfm(df):
     rfm["max_order_timestamp"] = rfm["max_order_timestamp"].dt.date
     recent_date = df["order_purchase_timestamp"].dt.date.max()
     rfm["recency"] = rfm["max_order_timestamp"].apply(lambda x: (recent_date - x).days)
-
     rfm.drop("max_order_timestamp", axis=1, inplace=True)
-    rfm = rfm.dropna(subset=["recency"])
     return rfm
 
 all_df = pd.read_excel("all_ecommerce.xlsx")
@@ -97,17 +95,16 @@ with st.sidebar:
         value=[min_date, max_date]
     )
 
-main_df = all_df[(all_df["order_purchase_timestamp"] >= str(start_date)) & (all_df["order_purchase_timestamp"] <= str(end_date))]
 
-monthly_order = create_monthly_order(main_df)
-sum_product_type = create_sum_order_producttype(main_df)
-seller_bycity = create_seller_bycity(main_df)
-seller_bystate = create_seller_bystate(main_df)
-topseller_byorder = create_topseller_byorder(main_df)
-topseller_byrevenue = create_topseller_byrevenue(main_df)
-customer_bycity = create_customer_bycity(main_df)
-customer_bystate = create_customer_bystate(main_df)
-rfm = create_rfm(main_df)
+monthly_order = create_monthly_order(all_df)
+sum_product_type = create_sum_order_producttype(all_df)
+seller_bycity = create_seller_bycity(all_df)
+seller_bystate = create_seller_bystate(all_df)
+topseller_byorder = create_topseller_byorder(all_df)
+topseller_byrevenue = create_topseller_byrevenue(all_df)
+customer_bycity = create_customer_bycity(all_df)
+customer_bystate = create_customer_bystate(all_df)
+rfm = create_rfm(all_df)
 
 st.header("Ecommerce-Public Dashboard :sparkles:")
 
