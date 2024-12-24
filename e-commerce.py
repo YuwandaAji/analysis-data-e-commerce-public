@@ -95,15 +95,18 @@ with st.sidebar:
         value=[min_date, max_date]
     )
 
+kondisi_lebih = all_df["order_purchase_timestamp"] >= pd.to_datetime(start_date)
+kondisi_kurang = all_df["order_purchase_timestamp"] <= pd.to_datetime(end_date)
+main_df = all_df[kondisi_lebih & kondisi_kurang]
 
-monthly_order = create_monthly_order(all_df)
-sum_product_type = create_sum_order_producttype(all_df)
-seller_bycity = create_seller_bycity(all_df)
-seller_bystate = create_seller_bystate(all_df)
-topseller_byorder = create_topseller_byorder(all_df)
-topseller_byrevenue = create_topseller_byrevenue(all_df)
-customer_bycity = create_customer_bycity(all_df)
-customer_bystate = create_customer_bystate(all_df)
+monthly_order = create_monthly_order(main_df)
+sum_product_type = create_sum_order_producttype(main_df)
+seller_bycity = create_seller_bycity(main_df)
+seller_bystate = create_seller_bystate(main_df)
+topseller_byorder = create_topseller_byorder(main_df)
+topseller_byrevenue = create_topseller_byrevenue(main_df)
+customer_bycity = create_customer_bycity(main_df)
+customer_bystate = create_customer_bystate(main_df)
 rfm = create_rfm(all_df)
 
 st.header("Ecommerce-Public Dashboard :sparkles:")
